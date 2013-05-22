@@ -45,11 +45,18 @@ def query_yes_no(question, default="yes"):
 def main(argv=None):
 	
 	filterstring = raw_input('Filter for this file type (please type the file extension, e.g. ".mov"): ')
-	inputleft = raw_input("Enter your first path (the one copied from): ") #"/Volumes/WD_POKA_1/"
+	
+	inputleft = raw_input("Enter your first path (the one copied from): ")
 	countleft = 0
 	pathleft = []
 	nameleft = []
 	sizeleft = []
+	
+	inputright = raw_input("Enter your second path (the one copied to): ")
+	countright = 0
+	pathright = []
+	nameright = []
+	sizeright = []
 
 	for root, dirs, files in os.walk(inputleft):
 		for name in files:
@@ -59,17 +66,6 @@ def main(argv=None):
 				pathleft.append(os.path.join(root, name))
 				countleft += 1
 
-	# print countleft
-	# print sizeleft
-	# print pathleft
-	# print nameleft
-
-	inputright = raw_input("Enter your second path (the one copied to): ") #"/Volumes/ProjectsRaid/WorkingProjects/jollefilm/jf-2012_001-poka/img/plates/conform"
-	countright = 0
-	pathright = []
-	nameright = []
-	sizeright = []
-
 	for root, dirs, files in os.walk(inputright):
 		for name in files:
 			if filterstring in name:
@@ -77,11 +73,6 @@ def main(argv=None):
 				nameright.append(name)
 				pathright.append(os.path.join(root, name))
 				countright += 1
-
-	# print countright
-	# print sizeright
-	# print pathright
-	# print nameright
 
 	leftset = set(nameleft)
 	matches = leftset.intersection(nameright)
