@@ -47,16 +47,22 @@ def main(argv=None):
 	filterstring = raw_input('Filter for this file type (please type the file extension, e.g. ".mov"): ')
 	
 	inputleft = raw_input("Enter your first path (the one copied from): ")
+	if not os.path.isdir(inputleft):
+		return "Error, not a valid path"
 	countleft = 0
 	pathleft = []
 	nameleft = []
 	sizeleft = []
 	
 	inputright = raw_input("Enter your second path (the one copied to): ")
+	if not os.path.isdir(inputright):
+		return "Error, not a valid path"
 	countright = 0
 	pathright = []
 	nameright = []
 	sizeright = []
+	
+	print "Please be patient. This might take a while. (About 1.5 minutes for 4TB of data over ethernet.)"
 
 	for root, dirs, files in os.walk(inputleft):
 		for name in files:
