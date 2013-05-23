@@ -1,0 +1,66 @@
+# to keep in sync with this Dropbox copy create a ~/.profile and add `source ~/Dropbox/Scripting/tinkertoys/dotprofile`
+
+# Tell ls to be colourful
+source "`brew --prefix`/etc/grc.bashrc"
+export CLICOLOR=1
+
+# Tell grep to highlight matches
+export GREP_OPTIONS='--color=auto'
+
+# Enhanced prompt
+
+export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u) \n| => \[\e[0m\]"
+
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find ~/Dropbox/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+
+sign () { /usr/bin/codesign -s "Kucera Alexander Code Signing Certificate" -f "${1}"; }
+
+# easy sourcing
+
+alias sourcep='source ~/.profile'
+
+# ls better
+alias ls='ls -l -a -h -F'
+alias llc='clear; ls'
+alias c='clear'
+
+# recursively delete Dropbox conflicted files
+alias dbconflict="find . -name *\ \(*conflicted* -exec rm {} \;"
+
+# Get your current public IP
+alias ip="curl icanhazip.com"
+
+# copy the working directory path
+alias cpwd='pwd|tr -d "\n"|pbcopy'
+
+# top
+alias cpu='top -o cpu -n 10'
+alias mem='top -o rsize -n 5' # memory
+
+#copy output of last command to clipboard
+alias cl="fc -e -|pbcopy"
+
+# create a new Gist of given name from the clipboard contents
+# needs https://github.com/defunkt/gist installed
+
+alias gist="gist -P -c -f $1"
+
+# app shortcuts
+alias nuke="/Applications/Nuke7.0v5/NukeX7.0v5.app/NukeX7.0v5"
+alias nuker="/Applications/Nuke7.0v5/NukeX7.0v5.app/NukeX7.0v5 -x -m 8 --gpu"
+alias handbrake="/Users/alex/Applications/HandBrake.app/Contents/MacOS/HandBrakeCLI"
+alias maya="/Applications/Autodesk/maya2013.5/Maya.app/Contents/bin/Render"
+alias deadslave="/Applications/Deadline/DeadlineSlave.app/Contents/MacOS/DeadlineSlave -nogui"
+alias monitor="/Applications/Deadline/DeadlineMonitor.app/Contents/MacOS/DeadlineMonitor"
+alias deadpulse="/Applications/Deadline/DeadlinePulse.app/Contents/MacOS/DeadlinePulse -nogui"
+alias minitor="/Applications/Deadline/DeadlineJobMonitor.app/Contents/MacOS/DeadlineJobMonitor"
+alias log="/Users/alex/Documents/Scripts/logtodayone.rb"
+
+export NUKE_PATH=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins
+export TANK_PATH=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio
+export MAYA_LOCATION=/Applications/Autodesk/maya2013.5/Maya.app/Contents
+export X_PIPELINE_LOCATION=/Volumes/ProjectsRaid/x_Pipeline
+export PATH=$MAYA_LOCATION/bin:/usr/local/share/python:$PATH:/Applications/Deadline/Resources/bin:$TANK_PATH
+export PYTHONPATH=$X_PIPELINE_LOCATION/x_Shotgun:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio/install/core/python:$(find ~/Dropbox/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PYTHONPATH
+export NODE_PATH="/usr/local/lib/node_modules"
