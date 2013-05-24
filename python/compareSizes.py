@@ -20,7 +20,6 @@ def main(argv=None):
 	countleft = 0
 	pathleft = []
 	nameleft = []
-	sizeleft = []
 	
 	inputright = raw_input("Enter your second path (the one copied to): ")
 	if not os.path.isdir(inputright):
@@ -28,14 +27,12 @@ def main(argv=None):
 	countright = 0
 	pathright = []
 	nameright = []
-	sizeright = []
 	
 	print "Please be patient. This might take a while. (About 1.5 minutes for 4TB of data over ethernet.)"
 
 	for root, dirs, files in os.walk(inputleft):
 		for name in files:
 			if filterstring in name:
-				sizeleft.append(os.stat(os.path.join(root, name)).st_size)
 				nameleft.append(name)
 				pathleft.append(os.path.join(root, name))
 				countleft += 1
@@ -43,7 +40,6 @@ def main(argv=None):
 	for root, dirs, files in os.walk(inputright):
 		for name in files:
 			if filterstring in name:
-				sizeright.append(os.stat(os.path.join(root, name)).st_size)
 				nameright.append(name)
 				pathright.append(os.path.join(root, name))
 				countright += 1
@@ -60,6 +56,9 @@ def main(argv=None):
 		leftindex = nameleft.index(match)
 		rightindex = nameright.index(match)
 		if (sizeleft[leftindex] != sizeright[rightindex]):
+			sizeleft = os.stat(pathleft[leftindex]).st_size
+			sizeright = os.stat(pathright[rightindex]).st_size
+		if (sizeleft != sizeright):
 			mismatch = 1
 			if (copyagain == None):
 				copyagain = query_yes_no("\n\nThere have been mismatches in size. Do you want to mark the specified files for later processing?")
