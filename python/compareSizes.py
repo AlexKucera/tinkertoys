@@ -9,10 +9,12 @@ Copyright (c) 2013 BabylonDreams. All rights reserved.
 
 import os, sys
 from query_yes_no import query_yes_no
+from hash_for_file import hash_for_file
 
 def main(argv=None):
 	
-	filterstring = raw_input('Filter for this file type (please type the file extension, e.g. ".mov"): ')
+	filterstring = raw_input('Filter for this file type (please type the file extension, e.g. ".mov" or leave empty to work on all files): ')
+	hashing = query_yes_no("Do you want to use the much more time intensive, but accurate checksum approach? (WARNING: Not feasible for anything beyond a couple of GB!!)", default="no")
 
 	inputleft = raw_input("Enter your first path (the one copied from): ")
 	if not os.path.isdir(inputleft):
@@ -28,15 +30,20 @@ def main(argv=None):
 	pathright = []
 	nameright = []
 	
-	print "Please be patient. This might take a while. (About 1.5 minutes for 4TB of data over ethernet.)"
-
+	if not hashing:
+		print "\n\nPlease be patient. This might take a while. (About 1.5 minutes for 1TB of data over ethernet.)"
+	else:
+		print "\n\nPlease be patient. This might take a while. (About 1.5 days (!!) for 1TB of data over ethernet.)"
+	
+	print "\nCaching first path's items…"
 	for root, dirs, files in os.walk(inputleft):
 		for name in files:
 			if filterstring in name:
 				nameleft.append(name)
 				pathleft.append(os.path.join(root, name))
 				countleft += 1
-
+	
+	print "Caching second path's items…\n"
 	for root, dirs, files in os.walk(inputright):
 		for name in files:
 			if filterstring in name:
@@ -51,11 +58,17 @@ def main(argv=None):
 	copyrecord = ""
 	exists = 0
 	mismatch = 0
+	i = 1
 	
 	for match in matches:
 		leftindex = nameleft.index(match)
 		rightindex = nameright.index(match)
-		if (sizeleft[leftindex] != sizeright[rightindex]):
+		if hashing:
+			print "Comparing file " + str(i) + " of " + str(len(matches))
+			i += 1
+			sizeleft=hash_for_file(pathleft[leftindex])
+			sizeright=hash_for_file(pathright[rightindex])
+		else:
 			sizeleft = os.stat(pathleft[leftindex]).st_size
 			sizeright = os.stat(pathright[rightindex]).st_size
 		if (sizeleft != sizeright):
@@ -73,7 +86,7 @@ def main(argv=None):
 					file.write("#!/usr/bin/env python\n# encoding: utf-8\nfrom copyFile import copyFile\n\ncopyFile(\"" + pathleft[leftindex] + "\", \"" + pathright[rightindex] + "\")\n")
 					file.close()
 					exists = 1
-			print match + " has a size mismatch"
+			print "\n\n" + match + " has a size mismatch\n"
 	if exists and os.path.exists(copyrecord):
 		os.chmod(copyrecord, 0755)
 		print "\n\nA file with all data to be copied has been written to your destination directory.\n\n" + copyrecord + "\n\nRefine it as you see fit or simply run it to get a new copy of the mismatched files.\n"
