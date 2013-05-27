@@ -1,0 +1,1 @@
+This is a placeholder file to keep this file's parent folder trackable with Git for further reference, since it doesn't make sense to track, for example, whole software packages that are easily redownloadable again.
