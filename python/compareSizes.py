@@ -79,7 +79,7 @@ def main(argv=None):
 				copyrecord = inputright + "/copyagain.py"
 				if exists:
 					file = open(copyrecord, 'a')
-					file.write("copyFile(" + pathleft[leftindex] + ", " + pathright[rightindex] + ")\n")
+					file.write("copyFile(\"" + pathleft[leftindex] + "\", \"" + pathright[rightindex] + "\")\n")
 					file.close()
 				else:
 					file = open(copyrecord, 'w')
