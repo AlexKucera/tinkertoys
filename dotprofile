@@ -55,6 +55,8 @@ alias monitor="/Applications/Deadline/DeadlineMonitor.app/Contents/MacOS/Deadlin
 alias deadpulse="/Applications/Deadline/DeadlinePulse.app/Contents/MacOS/DeadlinePulse -nogui"
 alias minitor="/Applications/Deadline/DeadlineJobMonitor.app/Contents/MacOS/DeadlineJobMonitor"
 alias log="/Users/alex/Documents/Scripts/logtodayone.rb"
+alias deadlic="/usr/local/FLEXnet/lmgrd -c '/usr/local/FLEXnet/Thinkbox_license_babylonDreams.lic'"
+alias nukecollect="nuke -t /Volumes/Drobo01/Archiv/Projekte/x_Pipeline/x_AppPlugins/Nuke/plugins/NukeCollect_cmdline.py"
 
 export NUKE_PATH=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins
 export TANK_PATH=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio
