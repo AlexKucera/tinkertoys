@@ -1,6 +1,6 @@
 # tinkertoys #
 
-## Random collection of scripts and doodads. 
+#### Random Collection of Scripts and Doodads. ####
 
 I'm still working in getting everything polished and uploaded, so this a very rough stage. Not everything has comments or documentation.
 
