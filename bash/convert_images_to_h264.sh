@@ -17,7 +17,7 @@ if [[ -z "$base" && -n "$ext" ]]; then          # If we have an extension and no
     ext=""
 fi
 
-vcodec="-vcodec libx264 -pix_fmt yuv420p -vf scale='960:trunc(ow/a/2)*2' -g 30 -b:v 2000k -vprofile high -bf 0"
+vcodec="-vcodec libx264 -pix_fmt yuv420p -vf scale='960:trunc(ow/a/2)*2' -g 30 -crf 15 -vprofile high -bf 0"
 acodec="-strict experimental -acodec aac -ab 160k -ac 2"
 sequence="${dir}${base}.%0${#counter}d.jpg"
 #echo $sequence
