@@ -63,6 +63,6 @@ export TANK_PATH=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/stud
 export MAYA_LOCATION=/Applications/Autodesk/maya2013.5/Maya.app/Contents
 export X_PIPELINE_LOCATION=/Volumes/ProjectsRaid/x_Pipeline
 export PATH=$MAYA_LOCATION/bin:/usr/local/share/python:$PATH:/Applications/Deadline/Resources/bin:$TANK_PATH
-export PYTHONPATH=$X_PIPELINE_LOCATION/x_Shotgun:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio/install/core/python:$(find ~/Dropbox/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$X_PIPELINE_LOCATION/x_Shotgun:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio/install/core/python:$(find ~/Dropbox/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 export PYTHONPATH
 export NODE_PATH="/usr/local/lib/node_modules"
