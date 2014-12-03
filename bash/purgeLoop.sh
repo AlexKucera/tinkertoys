@@ -23,7 +23,7 @@ else
 fi
 
 
-
+echo "Usage: purgeLoop.sh <Intervall in Minutes (defaults to 15)>"
 
 echo "Purging RAM every $seconds seconds or $minutes minutes"
 

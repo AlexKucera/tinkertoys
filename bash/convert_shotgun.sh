@@ -10,7 +10,7 @@
 # 
 
 if [[ ! $1 ]]; then
-	echo "Usage: convert_images_to_h264.sh <path to file> <optional: output resolution width (1920, 1280, etc.; defaults to 960)> <optional: framerate ; defaults to 25> <optional: quality (20 is great, 30 is lousy); defaults to 15>"
+	echo "Usage: convert_shotgun.sh <path to file> <optional: output resolution height (720, 1080, etc.; defaults to 720)>"
 	exit
 fi
 
@@ -34,33 +34,33 @@ fi
 if [[ $2 ]]; then
 	res=${2}
 else
-	res="960"
+	res="720"
 fi
 
-if [[ $3 ]]; then
-	fps=${3}
-else
-	fps="25"
-fi
-
-if [[ $4 ]]; then
-	quality=${4}
-else
-	quality="15"
-fi
-
-vcodec="-vcodec libx264 -pix_fmt yuv420p -vf scale='$res:trunc(ow/a/2)*2' -g 30 -crf $quality -vprofile high -bf 0"
+vcodec="-vcodec libx264 -pix_fmt yuv420p -vf scale='trunc(oh*a/2)*2:$res' -g 30 -crf 15 -vprofile high -bf 0"
 acodec="-strict experimental -acodec aac -ab 160k -ac 2"
 sequence="${dir}${base}.%0${#counter}d.jpg"
 #echo $sequence
 output=${basedir}/${base}.mp4
 #echo $output
-cmd="ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $acodec $vcodec -f mp4 $output"
+cmd="ffmpeg -f image2 -start_number $counter -i "$sequence" $acodec $vcodec -f mp4 $output"
 # >> /Volumes/ProjectsRaid/imagesequence-to-h264/convert.log
 #echo $cmd
 $cmd
 if [ "$?" == "0" ]; then
-	echo "Encode Successful!"
+	echo "MP4 Encode Successful!"
+	
+	
+	output=${basedir}/${base}.webm
+	webm_vcodec="-pix_fmt yuv420p -vcodec libvpx -vf scale='trunc(oh/a/2)*2:$res' -g 30 -b:v 7000k -vpre 720p -quality realtime -cpu-used 0 -qmin 10 -qmax 42"
+	webm_acodec="-acodec libvorbis -aq 60 -ac 2"
+	cmd="ffmpeg -f image2 -start_number $counter -i "$sequence" $webm_acodec $webm_vcodec -f webm $output"
+	#echo $cmd
+	$cmd
+	if [ "$?" == "0" ]; then
+		echo "WebM Encode Successful!"
+		exit 0
+	fi
 #	echo $dir
 	# while true
 	# 	do

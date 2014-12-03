@@ -1,0 +1,10 @@
+log.toConsole true
+log.toConsoleRolling true
+scene.open /Volumes/ProjectsRaid/WorkingProjects/traumwelt/traumwelt-2013_001-boschbatteries_newrevision/work/modo/05_render/anim_revision_0013.lxo
+pref.value render.threads auto
+@changerenderframerange.pl 91 135
+##@changerenderoutputpaths.pl /Volumes/ProjectsRaid/WorkingProjects/spacedigital/space-2014_002-castrol_hitech/img/cg/AK_Piston_New_OilStreak_02/
+##render.animation {*} group:renderpasses
+render.animation {*}
+scene.close
+app.quit

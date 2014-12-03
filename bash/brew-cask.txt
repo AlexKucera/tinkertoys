@@ -1,0 +1,1 @@
+brew cask install --appdir="/Applications" alfred backblaze-downloader bartender bittorrent-sync bodega default-folder-x dropbox hazel imagealpha imageoptim istat-menus keyboard-maestro little-snitch path-finder plex-media-server textmate tinkertool transmission transmission-remote-gui trim-enabler virtualhostx xquartz 
