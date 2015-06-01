@@ -9,7 +9,7 @@ export GREP_OPTIONS='--color=auto'
 
 # Enhanced prompt
 
-export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u)\n| => \[\e[0m\]"
+export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u)\n| \t => \[\e[0m\]"
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 
