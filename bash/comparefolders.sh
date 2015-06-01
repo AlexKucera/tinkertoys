@@ -21,7 +21,7 @@ fi
 diff -qr "$1" "$2"| grep -v -e 'DS_Store' -e 'Thumbs' > ~/compare.txt
 
 if [ "$?" == "0" ]; then
-	echo "Encode Successful!"
+	echo "Log written to ~/compare.txt!"
 	exit 0
 fi
 
