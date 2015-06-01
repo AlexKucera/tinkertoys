@@ -34,3 +34,4 @@ pymel-1.0.3
 .DS_Store*
 ehthumbs.db
 Thumbs.db
+/python/.idea/
