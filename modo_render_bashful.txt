@@ -1,12 +1,13 @@
 log.toConsole true
 log.toConsoleRolling true
 pathalias.create WorkingProjects "/Volumes/ProjectsRaid/WorkingProjects/"
-scene.open /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_001-faltbuehne/work/modo/05_render/03a_schalung_setzen_v01.lxo
+pathalias.create PERI "/Volumes/ProjectsRaid/WorkingProjects/"
+scene.open /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_001-faltbuehne/work/modo/05_render/turntables/abstuetzverlaengerung/faltbuehne_turntable_abstuetzverlaengerung_v03.lxo
 pref.value render.threads auto
-select.item Render
-item.channel first 1174
-item.channel last 1190
-##@changerenderframerange.pl 1174 1190
+##select.item Render
+##item.channel first 1001
+##item.channel last 1260
+@changerenderframerange.pl 1001 1260
 ##@changerenderoutputpaths.pl /Volumes/ProjectsRaid/WorkingProjects/spacedigital/space-2014_002-castrol_hitech/img/cg/AK_Piston_New_OilStreak_02/
 ##render.animation {*} group:renderpasses
 render.animation {*}
