@@ -18,20 +18,18 @@ import sys
 from datetime import datetime, date, time
 
 try:
-	path = sys.argv[1]
-	
+    path = sys.argv[1]
+
 except:
-	print "No filepath given"
-	sys.exit(0)
+    print "No filepath given"
+    sys.exit(0)
 
 print path
 if os.path.exists(path):
-	pass
+    pass
 else:
-	print "File does not exist."
-	sys.exit(0)
-
-
+    print "File does not exist."
+    sys.exit(0)
 
 ### Config ###
 
@@ -40,9 +38,9 @@ todaydate = now.strftime("%d.%m.%Y")
 utctime = now.strftime("%Y-%m-%d-%H-%M-%S")
 
 # where you exported your post as Markdown file.
-#path = "/Users/alex/Dropbox/Apps/Ulysses/"
+# path = "/Users/alex/Dropbox/Apps/Ulysses/"
 
-template  = """
+template = """
 ----
 
 Date: """ + todaydate + """
@@ -73,12 +71,12 @@ f.close()
 firstline = data[0]
 title = firstline[1:]
 body = data[1:]
-	
+
 f = open(path, 'w')
 f.write("Title: " + title)
 f.write(template)
 for line in data[1:]:
-	f.write(line)
+    f.write(line)
 f.close()
 
 
