@@ -72,11 +72,13 @@ export TANK_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/Tank/studio
 export SHOTGUN_API_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/PythonAPI/shotgun_api3
 export MAYA_LOCATION=/Applications/Autodesk/maya2013.5/Maya.app/Contents
 export PATH=$MAYA_LOCATION/bin:$PATH:/Applications/Deadline/Resources/bin:$TANK_PATH
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$TANK_PATH/install/core/python:$SHOTGUN_API_PATH:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 export PYTHONPATH
 export NODE_PATH="/usr/local/lib/node_modules"
 export EDITOR="/usr/local/bin/mate"
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 
 export NEXUS_ASSET=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content/assets
 export NEXUS_CONTENT=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content
