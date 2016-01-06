@@ -31,7 +31,7 @@
 CORES=$(getconf _NPROCESSORS_ONLN)
 NUKE="/Applications/Nuke9.0v6/NukeX9.0v6.app/NukeX9.0v6"
 FLAGS="-x -m $CORES --gpu -f"
-COMMAND="$NUKE $1 $FLAGS"
+COMMAND="$NUKE $FLAGS $1 $2"
 
 #!/bin/bash
 
@@ -46,11 +46,7 @@ STARTDATE=$(date -j -f "%s" "`date +%s`" "+%A, %d.%m.%Y %T")
 
 # basic Nuke render command line
 
-#$COMMAND /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_002-kopfspindel/work/nuke/kopfspindelrahmen_justieren_durchlauf_v05.nk
-$COMMAND /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_002-kopfspindel/work/nuke/kopfspindelrahmen_justieren_ohne_v04.nk
-$COMMAND /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_002-kopfspindel/work/nuke/kopfspindelrahmen_justieren_zoomout_v04.nk
-$COMMAND /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_002-kopfspindel/work/nuke/kopfspindelrahmen_justieren_zoom_v04.nk
-$COMMAND /Volumes/ProjectsRaid/WorkingProjects/peri/peri-2014_002-kopfspindel/work/nuke/kopfspindelrahmen_justieren_mit_v04.nk
+$COMMAND
 
 END=$(date +%s)
 ENDDATE=$(date -j -f "%s" "`date +%s`" "+%A, %d.%m.%Y %T")
