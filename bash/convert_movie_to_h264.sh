@@ -57,7 +57,7 @@ else
 fi
 
 dest_file_mp4="${dir}${base}_h264.mp4"
-mp4_vcodec="-vcodec libx264 -preset veryslow -pix_fmt yuv420p -vf scale='$res:trunc(ow/a/2)*2' -g $fps -crf $quality $rate -vprofile high -level 4.0 -bf 0"
+mp4_vcodec="-vcodec libx264 -preset veryslow -pix_fmt yuv420p -vf scale='$res:trunc(ow/a/2)*2' -crf $quality $rate -vprofile high -level 4.0 -bf 0"
 mp4_acodec="-c:a libfdk_aac -b:a 160k -cutoff 20000 -ac 2"
 echo $mp4_vcodec
 echo $mp4_acodec
