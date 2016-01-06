@@ -55,8 +55,10 @@ do
 
 `date +%H:%M:%S`
 	"
-	echo Free:       $FREE MB
-	echo Inactive:   $INACTIVE MB
+	echo Free:       	$FREE MB
+	echo Inactive:   	$INACTIVE MB
+	echo RAM limit: 	$ram_limit MB
+	echo Freeing limit:	$inactive_limit MB
 	
 	if (( $FREE <= $ram_limit )); then
 		if (($INACTIVE >= $inactive_limit )); then
