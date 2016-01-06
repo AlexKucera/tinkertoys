@@ -1,5 +1,9 @@
 # to keep in sync with this Dropbox copy create a ~/.profile and add `source /Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/dotprofile`
 
+# http://osxdaily.com/2012/07/12/list-download-history-mac-os-x/
+# Delete download history on Terminal open
+sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
+
 # Tell ls to be colourful
 source "`brew --prefix`/etc/grc.bashrc"
 export CLICOLOR=1
@@ -37,6 +41,11 @@ alias cpwd='pwd|tr -d "\n"|pbcopy'
 alias cpu='top -o cpu -n 10'
 alias mem='top -o rsize -n 5' # memory
 
+# kill
+
+alias pause="kill -STOP"
+alias resume="kill -CONT"
+
 #copy output of last command to clipboard
 alias cl="fc -e -|pbcopy"
 
@@ -46,40 +55,45 @@ alias cl="fc -e -|pbcopy"
 alias gist="gist -P -c -f $1"
 
 # app shortcuts
+## modo
 alias modo="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo"
 alias modor="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl"
 alias modorb="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < /Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/modo_render.txt"
 alias modorbc="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < /Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/modo_render_chef.txt"
-alias nuke="/Applications/Nuke9.0v5/NukeX9.0v5.app/NukeX9.0v5"
-alias nuker="/Applications/Nuke9.0v5/NukeX9.0v5.app/NukeX9.0v5 -x -m 8 --gpu"
-alias handbrake="/Users/alex/Applications/HandBrake.app/Contents/MacOS/HandBrakeCLI"
-alias maya="/Applications/Autodesk/maya2013.5/Maya.app/Contents/bin/Render"
+
+## Nuke
+alias nuke="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8"
+#alias nuker="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8 -x -m 8 --gpu"
+alias nuker="/Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/bash/nukerender_bash.sh"
+alias nukecollect="nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/NukeCollect_cmdline.py"
+alias nukereads="nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/show_used_footage.py"
+
+## Deadline
 alias deadslave="/Applications/Deadline/DeadlineSlave.app/Contents/MacOS/DeadlineSlave -nogui"
 alias monitor="/Applications/Deadline/DeadlineMonitor.app/Contents/MacOS/DeadlineMonitor"
 alias deadpulse="/Applications/Deadline/DeadlinePulse.app/Contents/MacOS/DeadlinePulse -nogui"
 alias minitor="/Applications/Deadline/DeadlineJobMonitor.app/Contents/MacOS/DeadlineJobMonitor"
-alias log="/Users/alex/Documents/Scripts/logtodayone.rb"
 alias deadlic="'/Applications/Thinkbox/License Server/lmgrd' -c '/Applications/Thinkbox/License Server/Thinkbox.lic'"
-alias nukecollect="nuke -t /Volumes/Drobo01/Archiv/Projekte/x_Pipeline/x_AppPlugins/Nuke/plugins/NukeCollect_cmdline.py"
+
+## Shotgun
 alias tank="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio/tank"
 alias tankdocs="open https://toolkit.shotgunsoftware.com"
 
+## Various
+alias handbrake="/Users/alex/Applications/HandBrake.app/Contents/MacOS/HandBrakeCLI"
+alias maya="/Applications/Autodesk/maya2013.5/Maya.app/Contents/bin/Render"
+alias log="/Users/alex/Documents/Scripts/logtodayone.rb"
+
+
+# Environment Variables
 export X_PIPELINE_LOCATION=/Volumes/ProjectsRaid/x_Pipeline
+
+## Nuke
 export NUKE_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins
 export NUKE_TEMP_DIR=/Volumes/SSD/Cache/Nuke
 export OPTICAL_FLARES_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins/OpticalFlares/Textures-And-Presets
-export TANK_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/Tank/studio
-export SHOTGUN_API_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/PythonAPI/shotgun_api3
-export MAYA_LOCATION=/Applications/Autodesk/maya2013.5/Maya.app/Contents
-export PATH=$MAYA_LOCATION/bin:$PATH:/Applications/Deadline/Resources/bin:$TANK_PATH
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
-export PYTHONPATH
-export NODE_PATH="/usr/local/lib/node_modules"
-export EDITOR="/usr/local/bin/mate"
 
-# Specify your defaults in this environment variable
-export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
-
+## modo
 export NEXUS_ASSET=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content/assets
 export NEXUS_CONTENT=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content
 export NEXUS_LICENSE=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resources/alex/license
@@ -87,5 +101,27 @@ export NEXUS_PREFS=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resou
 export NEXUS_TEMP=/Volumes/SSD/Cache/modo/temp
 export NEXUS_USER=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resources/alex
 
+## Shotgun
+export TANK_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/Tank/studio
+export SHOTGUN_API_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/PythonAPI/shotgun_api3
+
+## Maya
+export MAYA_LOCATION=/Applications/Autodesk/maya2013.5/Maya.app/Contents
+
+## Deadline
+export PATH=$MAYA_LOCATION/bin:$PATH:/Applications/Deadline/Resources/bin:$TANK_PATH
+
+## Node.js
+export NODE_PATH="/usr/local/lib/node_modules"
+
+## Various
+export EDITOR="/usr/local/bin/mate"
+
+## Homebrew
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
+
+## Python
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PYTHONPATH
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 export PYENV_ROOT=/usr/local/opt/pyenv
