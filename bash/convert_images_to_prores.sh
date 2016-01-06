@@ -11,9 +11,10 @@
 
 echo "
 Usage: convert_images_to_h264.sh <path to file> 
-<optional: output resolution width (1920, 1280, etc.; defaults to 960)> 
+<optional: output resolution width (1920, 1280, etc.; defaults to 1920)> 
 <optional: framerate ; defaults to 25> 
-<optional: quality (5 is great, 32 is lousy); defaults to 11> 
+<optional: quality (5 is great, 32 is lousy); defaults to 11>
+<optional: format 0-4 (‘proxy’,‘lt’,‘standard’,‘hq’,‘4444’); defaults to 4 (ProRes 4444)>
 "
 
 if [[ ! $1 ]]; then
@@ -67,7 +68,7 @@ fi
 if [[ $2 ]]; then
 	res=${2}
 else
-	res="960"
+	res="1920"
 fi
 
 if [[ $3 ]]; then
@@ -82,9 +83,13 @@ else
 	quality="11"
 fi
 
+if [[ $5 ]]; then
+	format=${5}
+else
+	format="4"
+fi
 
-
-vcodec="-c:v prores_ks -profile:v 4 -pix_fmt yuv444p10le -vendor ap10 -vf scale='$res:trunc(ow/a/2)*2' -g $fps -qscale:v $quality"
+vcodec="-c:v prores_ks -profile:v $format -pix_fmt yuv444p10le -vendor ap10 -vf scale='$res:trunc(ow/a/2)*2' -g $fps -qscale:v $quality"
 acodec="-c:a libfdk_aac -b:a 160k -ac 2"
 sequence="${dir}${base}${counter_sep}%0${#counter}d.jpg"
 #echo $sequence
