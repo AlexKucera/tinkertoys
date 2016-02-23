@@ -12,15 +12,12 @@ export CLICOLOR=1
 export GREP_OPTIONS='--color=auto'
 
 # Enhanced prompt
-
 export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u)\n| \t => \[\e[0m\]"
-
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':'):$(find /Volumes/ProjectsRaidBackup/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 
 sign () { /usr/bin/codesign -s "Kucera Alexander Code Signing Certificate" -f "${1}"; }
 
 # easy sourcing
-
 alias sourcep='source ~/.profile'
 
 # ls better
@@ -42,7 +39,6 @@ alias cpu='top -o cpu -n 10'
 alias mem='top -o rsize -n 5' # memory
 
 # kill
-
 alias pause="kill -STOP"
 alias resume="kill -CONT"
 
@@ -51,8 +47,10 @@ alias cl="fc -e -|pbcopy"
 
 # create a new Gist of given name from the clipboard contents
 # needs https://github.com/defunkt/gist installed
-
 alias gist="gist -P -c -f $1"
+
+# Show what is using a Volume if it cannot be unmounted
+alias inuse="lsof | grep $1"
 
 # app shortcuts
 ## modo
@@ -121,6 +119,7 @@ export EDITOR="/usr/local/bin/mate"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 
 ## Python
+export PATH=/usr/local/lib/python2.7/site-packages:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 export PYTHONPATH
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
