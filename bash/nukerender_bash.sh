@@ -28,10 +28,32 @@
 # To display a list of command line flags (switches) available to you, use the following command:
 # nuke -help
 
+echo "Please input custom render range (ex.: <-F 12-13>) or press enter to use the comps render range."
+read RENDERRANGE
+
+echo "Disable GPU (y/n)?"
+read answer
+if echo "$answer" | grep -iq "^y" ;then
+    GPU=""
+else
+	GPU="--gpu"
+fi
+
+echo "Use Interactive License (i.e. if Furnace tools were used) (y/n)?"
+read answer
+if echo "$answer" | grep -iq "^y" ;then
+    INTERACTIVE="-i"
+else
+	INTERACTIVE=""
+fi
+
 CORES=$(getconf _NPROCESSORS_ONLN)
-NUKE="/Applications/Nuke9.0v6/NukeX9.0v6.app/NukeX9.0v6"
-FLAGS="-x -m $CORES --gpu -f"
-COMMAND="$NUKE $FLAGS $1 $2"
+NUKE="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8"
+FLAGS="-x $INTERACTIVE -m $CORES $GPU -f"
+COMMAND="$NUKE $FLAGS $RENDERRANGE $1 $2"
+
+echo $COMMAND
+echo ""
 
 #!/bin/bash
 
