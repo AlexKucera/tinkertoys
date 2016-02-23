@@ -52,6 +52,9 @@ alias gist="gist -P -c -f $1"
 # Show what is using a Volume if it cannot be unmounted
 alias inuse="lsof | grep $1"
 
+# Find broken symlinks
+alias symlinks="find . -type l ! -exec test -e {} \; -print"
+
 # app shortcuts
 ## modo
 alias modo="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo"
