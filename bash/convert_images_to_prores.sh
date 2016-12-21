@@ -21,7 +21,7 @@ if [[ ! $1 ]]; then
 	exit
 fi
 
-nuke="/Applications/Nuke9.0v4/NukeX9.0v4.app/NukeX9.0v4"
+nuke=$NUKEPATH
 
 
 fullpath=$1
@@ -44,7 +44,7 @@ if [[ -d "$fullpath" ]]
 filename="${fullpath##*/}"                      # Strip longest match of */ from start
 #echo $filename
 dir="${fullpath%$filename}"
-folder=`basename $dir`
+folder=`basename "$dir"`
 folder=/${folder}/
 basedir="${dir%$folder}"
 base="${filename%[._][0-9]*.*}"                       # Strip shortest match of . or _ plus any number of numbers a dot and any number of characters from end
@@ -98,21 +98,20 @@ output=${basedir}/${base}.mov
 
 if [[ $ext != "jpg" ]]; then
 	if [[ $ext != "JPG" ]]; then
-		nukeconvert="$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/convertToJPG.py $fullpath"
-		$nukeconvert
+		$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/bd_convertToJPG.py "$fullpath"
 		sequence="${dir}_tmp/${base}.%0${#counter}d.jpg"
 	fi
 fi
 
 #cmd="ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $acodec $vcodec -f mp4 $output"
-cmd="ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $vcodec -f mov $output"
+ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $vcodec -f mov "$output"
 # >> /Volumes/ProjectsRaid/imagesequence-to-h264/convert.log
 #echo $cmd
 $cmd
 if [ "$?" == "0" ]; then
 	echo "Encode Successful!"
 	tmpdir=${dir}_tmp
-	rm -R -f $tmpdir
+	rm -R -f "$tmpdir"
 #	echo $dir
 	# while true
 	# 	do

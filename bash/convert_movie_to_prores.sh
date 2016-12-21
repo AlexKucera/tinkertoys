@@ -11,18 +11,10 @@
 
 echo "
 Usage: convert_images_to_h264.sh <path to file> 
-<optional: output resolution width (1920, 1280, etc.; defaults to 960)> 
-<optional: quality (20 is great, 30 is lousy); defaults to 15> 
-<optional: maximum bitrate (average) e.g: 1500 or 2000; defaults to 5000>
-
-
-Bitrate Guideline:
-SD	2,000 – 5,000
-720p	5,000 – 10,000
-1080p	10,000 – 20,000
-2K	20,000 – 30,000
-4K	30,000 – 60,000
-
+<optional: output resolution width (1920, 1280, etc.; defaults to 1920)> 
+<optional: framerate ; defaults to 25> 
+<optional: quality (5 is great, 32 is lousy); defaults to 11>
+<optional: format 0-4 (‘proxy’,‘lt’,‘standard’,‘hq’,‘4444’); defaults to 4 (ProRes 4444)>
 "
 
 if [[ ! $1 ]]; then
@@ -48,25 +40,30 @@ fi
 if [[ $2 ]]; then
 	res=${2}
 else
-	res="960"
+	res="1920"
 fi
 
 if [[ $3 ]]; then
-	quality=${3}
+	fps=${3}
 else
-	quality="15"
+	fps="25"
 fi
 
 if [[ $4 ]]; then
-	let double=$4*2
-	rate="-maxrate ${4}k -bufsize ${double}k"
+	quality=${4}
 else
-	rate="-maxrate 5000k -bufsize 10000k"
+	quality="11"
 fi
 
-dest_file_mp4="${dir}${base}_h264.mp4"
-mp4_vcodec="-vcodec libx264 -preset veryslow -pix_fmt yuv420p -vf scale='$res:trunc(ow/a/2)*2' -crf $quality $rate -vprofile high -level 4.0 -bf 0"
-mp4_acodec="-c:a libfdk_aac -b:a 160k -cutoff 20000 -ac 2"
+if [[ $5 ]]; then
+	format=${5}
+else
+	format="4"
+fi
+
+dest_file_mp4="${dir}${base}_prores.mov"
+mp4_vcodec="-c:v prores_ks -profile:v $format -pix_fmt yuv444p10le -vendor ap10 -vf scale='$res:trunc(ow/a/2)*2' -g $fps -qscale:v $quality"
+mp4_acodec="-c:a libfdk_aac -b:a 160k -ac 2"
 echo $mp4_vcodec
 echo $mp4_acodec
-ffmpeg -i "$fullpath" $mp4_acodec $mp4_vcodec -f mp4 "$dest_file_mp4"
+ffmpeg -y -r $fps -i "$fullpath" $mp4_acodec $mp4_vcodec -f mov "$dest_file_mp4"

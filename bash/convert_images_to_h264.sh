@@ -14,7 +14,14 @@ Usage: convert_images_to_h264.sh <path to file>
 <optional: output resolution width (1920, 1280, etc.; defaults to 960)> 
 <optional: framerate ; defaults to 25> 
 <optional: quality (20 is great, 30 is lousy); defaults to 15> 
-<optional: maximum bitrate (average) e.g: 1500 or 2000; defaults to 5000>
+<optional: maximum bitrate (average) e.g: 1500 or 2000; defaults to 5000> 
+
+Bitrate Guideline:
+SD	2,000 – 5,000
+720p	5,000 – 10,000
+1080p	10,000 – 20,000
+2K	20,000 – 30,000
+4K	30,000 – 60,000
 
 "
 
@@ -22,7 +29,7 @@ if [[ ! $1 ]]; then
 	exit
 fi
 
-nuke="/Applications/Nuke9.0v5/NukeX9.0v5.app/NukeX9.0v5"
+nuke=$NUKEPATH
 
 
 fullpath=$1
@@ -43,13 +50,11 @@ if [[ -d "$fullpath" ]]
    fi
 
 filename="${fullpath##*/}"                      # Strip longest match of */ from start
-#echo $filename
 dir="${fullpath%$filename}"
-folder=`basename $dir`
+folder=`basename "$dir"`
 folder=/${folder}/
 basedir="${dir%$folder}"
 base="${filename%[._][0-9]*.*}"                       # Strip shortest match of . or _ plus any number of numbers a dot and any number of characters from end
-#echo $base
 counter_ext="${filename#$base}"                  # Substring from len of base thru end
 counter_ext="${counter_ext#[._]}"
 #echo $counter_ext
@@ -97,25 +102,22 @@ acodec="-c:a libfdk_aac -b:a 160k -ac 2"
 sequence="${dir}${base}${counter_sep}%0${#counter}d.jpg"
 #echo $sequence
 output=${basedir}/${base}.mp4
-#echo $output
 
 if [[ $ext != "jpg" ]]; then
 	if [[ $ext != "JPG" ]]; then
-		nukeconvert="$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/convertToJPG.py $fullpath"
-		$nukeconvert
+		$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/bd_convertToJPG.py "$fullpath"
 		sequence="${dir}_tmp/${base}.%0${#counter}d.jpg"
 	fi
 fi
 
 #cmd="ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $acodec $vcodec -f mp4 $output"
-cmd="ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $vcodec -f mp4 $output"
+ffmpeg -y -f image2 -start_number $counter -r $fps -i "$sequence" $vcodec -f mp4 "$output"
 # >> /Volumes/ProjectsRaid/imagesequence-to-h264/convert.log
-#echo $cmd
-$cmd
+
 if [ "$?" == "0" ]; then
 	echo "Encode Successful!"
 	tmpdir=${dir}_tmp
-	rm -R -f $tmpdir
+	rm -R -f "$tmpdir"
 #	echo $dir
 	# while true
 	# 	do
