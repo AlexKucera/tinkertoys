@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Script to automatically start the Azure renderfarm VMs one by one.
+# https://github.com/azure/azure-xplat-cli
 
 echo "Shutting down the whole farm."
 azure vm shutdown Render01

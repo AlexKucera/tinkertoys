@@ -3,6 +3,7 @@
 # Script to automatically deallocate inactive Virtual Machines on Azure every few minutes
 # call with azure_stop_idle_vm.sh <intervall in minutes>,
 # for example azure_stop_idle_vm.sh 15 to run the deallocate command every 15 minutes
+# https://github.com/azure/azure-xplat-cli
 
 # Config
 
