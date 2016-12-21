@@ -38,8 +38,8 @@ ram_limit=$(($installed_ram/(100/$minimum_ram_percent)))
 inactive_limit=$(($installed_ram/(100/$inactive_ram_percent)))
 
 echo "
-RAM limit $ram_limit MB"
-echo "Freeing limit $inactive_limit MB"
+RAM limit $ram_limit MB (purge if Free RAM is below this limit)"
+echo "Freeing limit $inactive_limit MB (only purge if Inactive RAM is above this limit)"
 
 while [ 1 = 1 ]
 do
@@ -57,8 +57,8 @@ do
 	"
 	echo Free:       	$FREE MB
 	echo Inactive:   	$INACTIVE MB
-	echo RAM limit: 	$ram_limit MB
-	echo Freeing limit:	$inactive_limit MB
+	echo RAM limit: 	$ram_limit MB - purge if Free RAM is below this limit
+	echo Freeing limit:	$inactive_limit MB - only purge if Inactive RAM is above this limit
 	
 	if (( $FREE <= $ram_limit )); then
 		if (($INACTIVE >= $inactive_limit )); then
