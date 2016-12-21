@@ -29,7 +29,7 @@
 # nuke -help
 
 CORES=$(getconf _NPROCESSORS_ONLN)
-NUKE="/Applications/Nuke9.0v6/NukeX9.0v6.app/NukeX9.0v6"
+NUKE=$NUKEPATH
 FLAGS="-x -m $CORES --gpu -f"
 COMMAND="$NUKE $1 $FLAGS"
 

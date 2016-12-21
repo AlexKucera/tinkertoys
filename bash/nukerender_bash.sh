@@ -48,7 +48,7 @@ else
 fi
 
 CORES=$(getconf _NPROCESSORS_ONLN)
-NUKE="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8"
+NUKE=$NUKEPATH
 FLAGS="-x $INTERACTIVE -m $CORES $GPU -f"
 COMMAND="$NUKE $FLAGS $RENDERRANGE $1 $2"
 
