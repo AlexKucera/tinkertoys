@@ -4,6 +4,56 @@
 # Delete download history on Terminal open
 sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 
+# Colorized MAN pages
+export LESS_TERMCAP_mb=$'\e'"[1;31m"
+export LESS_TERMCAP_md=$'\e'"[1;31m"
+export LESS_TERMCAP_me=$'\e'"[0m"
+export LESS_TERMCAP_se=$'\e'"[0m"
+export LESS_TERMCAP_so=$'\e'"[1;44;33m"
+export LESS_TERMCAP_ue=$'\e'"[0m"
+export LESS_TERMCAP_us=$'\e'"[1;32m"
+
+
+
+# Global Environment Variables
+
+function json_var()
+{
+	result=`cat "$1" | jq ".$2"`
+	result="${result%\"}"
+	result="${result#\"}"
+	echo "$result"
+}
+
+export global_config="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/bd_pipeline/global_config.json"
+
+export RAID=`json_var $global_config "raid"`
+export WORKINGPROJECTS=`json_var $global_config "working_projects"`
+export PIPELINE=`json_var $global_config "pipeline"`
+export PROJECTSPATH="$RAID/$WORKINGPROJECTS"
+
+export X_PIPELINE_LOCATION="$RAID/$PIPELINE"
+
+export MODOPATH="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app"
+export MODOBETAPATH="$X_PIPELINE_LOCATION/x_AppPlugins/modo/beta/modo.app"
+export NUKEPATH="/Applications/Nuke10.0v3/NukeX10.0v3.app/NukeX10.0v3"
+export MAYAPATH="/Applications/Autodesk/maya2013.5/Maya.app"
+
+
+
+
+# List all functions and aliases
+
+function aliases
+{
+    COMMANDS=`echo -n $PATH | xargs -d : -I {} find {} -maxdepth 1 \
+        -executable -type f -printf '%P\n'`
+    ALIASES=`alias | cut -d '=' -f 1`
+    echo "$COMMANDS"$'\n'"$ALIASES" | sort -u
+}
+
+
+
 # Tell ls to be colourful
 source "`brew --prefix`/etc/grc.bashrc"
 export CLICOLOR=1
@@ -13,7 +63,7 @@ export GREP_OPTIONS='--color=auto'
 
 # Enhanced prompt
 export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u)\n| \t => \[\e[0m\]"
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':'):$(find /Volumes/ProjectsRaidBackup/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find $X_PIPELINE_LOCATION/Scripting -name '.*' -prune -o -type d | tr '\n' ':'):$(find /Volumes/ProjectsRaidBackup/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 
 sign () { /usr/bin/codesign -s "Kucera Alexander Code Signing Certificate" -f "${1}"; }
 
@@ -33,6 +83,10 @@ alias ip="curl icanhazip.com"
 
 # copy the working directory path
 alias cpwd='pwd|tr -d "\n"|pbcopy'
+
+# duplicate folder structure (copies only folders not files to a directory adjacent of the root)
+
+dupfolder() { rsync -a "$1" "$1_dup" --include \*/ --exclude \*; }
 
 # top
 alias cpu='top -o cpu -n 10'
@@ -57,17 +111,19 @@ alias symlinks="find . -type l ! -exec test -e {} \; -print"
 
 # app shortcuts
 ## modo
-alias modo="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo"
-alias modor="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl"
-alias modorb="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < /Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/modo_render.txt"
-alias modorbc="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < /Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/modo_render_chef.txt"
+alias modo="$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/alex/startup/ModoLauncher" #"$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo"
+alias modobeta="$X_PIPELINE_LOCATION/x_AppPlugins/modo/beta/ModoBetaLauncher"
+alias modo_moni="$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/moni/startup/ModoLauncher"
+alias modor="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl"
+alias modorb="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < $X_PIPELINE_LOCATION/Scripting/tinkertoys/modo_render.txt"
+alias modorbc="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < $X_PIPELINE_LOCATION/Scripting/tinkertoys/modo_render_chef.txt"
 
 ## Nuke
-alias nuke="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8"
+alias nuke=$NUKEPATH
 #alias nuker="/Applications/Nuke9.0v8/NukeX9.0v8.app/NukeX9.0v8 -x -m 8 --gpu"
-alias nuker="/Volumes/ProjectsRaid/x_Pipeline/Scripting/tinkertoys/bash/nukerender_bash.sh"
-alias nukecollect="nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/NukeCollect_cmdline.py"
-alias nukereads="nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/show_used_footage.py"
+alias nuker="$X_PIPELINE_LOCATION/Scripting/tinkertoys/bash/nukerender_bash.sh"
+alias nukecollect="nuke -t $X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins/NukeCollect_cmdline.py"
+alias nukereads="nuke -t $X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins/show_used_footage.py"
 
 ## Deadline
 alias deadslave="/Applications/Deadline/DeadlineSlave.app/Contents/MacOS/DeadlineSlave -nogui"
@@ -77,17 +133,13 @@ alias minitor="/Applications/Deadline/DeadlineJobMonitor.app/Contents/MacOS/Dead
 alias deadlic="'/Applications/Thinkbox/License Server/lmgrd' -c '/Applications/Thinkbox/License Server/Thinkbox.lic'"
 
 ## Shotgun
-alias tank="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Shotgun/Tank/studio/tank"
+alias tank="$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/Tank/studio/tank"
 alias tankdocs="open https://toolkit.shotgunsoftware.com"
 
 ## Various
 alias handbrake="/Users/alex/Applications/HandBrake.app/Contents/MacOS/HandBrakeCLI"
-alias maya="/Applications/Autodesk/maya2013.5/Maya.app/Contents/bin/Render"
+alias maya=$MAYAPATH/Contents/bin/Render
 alias log="/Users/alex/Documents/Scripts/logtodayone.rb"
-
-
-# Environment Variables
-export X_PIPELINE_LOCATION=/Volumes/ProjectsRaid/x_Pipeline
 
 ## Nuke
 export NUKE_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins
@@ -95,12 +147,12 @@ export NUKE_TEMP_DIR=/Volumes/SSD/Cache/Nuke
 export OPTICAL_FLARES_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Nuke/plugins/OpticalFlares/Textures-And-Presets
 
 ## modo
-export NEXUS_ASSET=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content/assets
-export NEXUS_CONTENT=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/content
-export NEXUS_LICENSE=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resources/alex/license
-export NEXUS_PREFS=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resources/alex/os_spec
+export NEXUS_ASSET=$X_PIPELINE_LOCATION/x_AppPlugins/modo/content/assets
+export NEXUS_CONTENT=$X_PIPELINE_LOCATION/x_AppPlugins/modo/content
+export NEXUS_LICENSE=$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/alex/license
+export NEXUS_PREFS=$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/alex/os_spec
 export NEXUS_TEMP=/Volumes/SSD/Cache/modo/temp
-export NEXUS_USER=/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/modo/user_resources/alex
+export NEXUS_USER=$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/alex
 
 ## Shotgun
 export TANK_PATH=$X_PIPELINE_LOCATION/x_AppPlugins/Shotgun/Tank/studio
@@ -123,7 +175,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom
 
 ## Python
 export PATH=/usr/local/lib/python2.7/site-packages:$PATH
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/Maya/pymel-1.0.3:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find /Volumes/ProjectsRaid/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/bd_pipeline:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find $X_PIPELINE_LOCATION/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 export PYTHONPATH
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 export PYENV_ROOT=/usr/local/opt/pyenv
