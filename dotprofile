@@ -71,7 +71,7 @@ sign () { /usr/bin/codesign -s "Kucera Alexander Code Signing Certificate" -f "$
 alias sourcep='source ~/.profile'
 
 # ls better
-alias ls='ls -l -a -h -F'
+alias ls='ls -alFGhOp'
 alias llc='clear; ls'
 alias c='clear'
 
