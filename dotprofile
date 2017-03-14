@@ -17,19 +17,17 @@ export LESS_TERMCAP_us=$'\e'"[1;32m"
 
 # Global Environment Variables
 
-function json_var()
-{
-	result=`cat "$1" | jq ".$2"`
-	result="${result%\"}"
-	result="${result#\"}"
-	echo "$result"
+function json_var {
+    eval "var=$(jq --arg idx "$2" '@sh "\(.[$idx])"' "$1")"
+	echo $var | sed "s/^\([\"']\)\(.*\)\1\$/\2/g" # Strips additional quotes from the beginngin or end
 }
+
 
 export global_config="/Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/bd_pipeline/global_config.json"
 
-export RAID=`json_var $global_config "raid"`
-export WORKINGPROJECTS=`json_var $global_config "working_projects"`
-export PIPELINE=`json_var $global_config "pipeline"`
+export RAID=`json_var $global_config "project drive"`
+export WORKINGPROJECTS=`json_var $global_config "projects location"`
+export PIPELINE=`json_var $global_config "pipeline location"`
 export PROJECTSPATH="$RAID/$WORKINGPROJECTS"
 
 export X_PIPELINE_LOCATION="$RAID/$PIPELINE"
