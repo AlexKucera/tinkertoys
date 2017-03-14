@@ -172,8 +172,10 @@ export EDITOR="/usr/local/bin/mate"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 
 ## Python
-export PATH=/usr/local/lib/python2.7/site-packages:$PATH
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/bd_pipeline:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$(find $X_PIPELINE_LOCATION/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
+#export PATH=/usr/local/lib/python2.7/site-packages:$PATH
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:
+export PYTHONPATH=$PYTHONPATH:/Library/Frameworks/Python.framework/Versions/2.7/bin:$X_PIPELINE_LOCATION/x_AppPlugins/bd_pipeline:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_python_api:$X_PIPELINE_LOCATION/x_AppPlugins/modo/script_dev/modo_PySide_api:$(find $X_PIPELINE_LOCATION/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 export PYTHONPATH
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-export PYENV_ROOT=/usr/local/opt/pyenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+export PYENV_ROOT=/usr/local/var/pyenv
