@@ -99,14 +99,18 @@ fi
 
 vcodec="-vcodec libx264 -preset veryslow -pix_fmt yuv420p -vf scale='$res:trunc(ow/a/2)*2' -g $fps -crf $quality $rate -vprofile high -level 4.0 -bf 0"
 acodec="-c:a libfdk_aac -b:a 160k -ac 2"
-sequence="${dir}${base}${counter_sep}%0${#counter}d.jpg"
+sequence="${dir}${base}${counter_sep}%0${#counter}d.${ext}"
 #echo $sequence
 output=${basedir}/${base}.mp4
 
 if [[ $ext != "jpg" ]]; then
 	if [[ $ext != "JPG" ]]; then
-		$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/bd_convertToJPG.py "$fullpath"
-		sequence="${dir}_tmp/${base}.%0${#counter}d.jpg"
+		if [[ $ext != "tga" ]]; then
+			if [[ $ext != "TGA" ]]; then
+				$nuke -t /Volumes/ProjectsRaid/x_Pipeline/x_AppPlugins/Nuke/plugins/bd_convertToJPG.py "$fullpath"
+				sequence="${dir}_tmp/${base}.%0${#counter}d.${ext}"
+			fi
+		fi
 	fi
 fi
 
