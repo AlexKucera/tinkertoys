@@ -62,6 +62,8 @@ do
 	
 	if (( $FREE <= $ram_limit )); then
 		if (($INACTIVE >= $inactive_limit )); then
+echo "
+`date +%H:%M:%S` - purging RAM..."
 			purge &
 			wait
 			echo "
