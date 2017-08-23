@@ -12,7 +12,7 @@
 echo "
 Usage: convert_images_to_h264.sh <path to file> 
 <optional: output resolution width (1920, 1280, etc.; defaults to 1920)> 
-<optional: framerate ; defaults to 25> 
+<optional: framerate of the input file ; defaults to same as file> 
 <optional: quality (5 is great, 32 is lousy); defaults to 11>
 <optional: format 0-4 (‘proxy’,‘lt’,‘standard’,‘hq’,‘4444’); defaults to 4 (ProRes 4444)>
 "
@@ -45,6 +45,7 @@ fi
 
 if [[ $3 ]]; then
 	fps=${3}
+	ifps="-r ${3}"
 else
 	fps="25"
 fi
@@ -66,4 +67,5 @@ mp4_vcodec="-c:v prores_ks -profile:v $format -pix_fmt yuv444p10le -vendor ap10 
 mp4_acodec="-c:a libfdk_aac -b:a 160k -ac 2"
 echo $mp4_vcodec
 echo $mp4_acodec
-ffmpeg -y -r $fps -i "$fullpath" $mp4_acodec $mp4_vcodec -f mov "$dest_file_mp4"
+echo $ifps
+ffmpeg -y $ifps -i "$fullpath" $mp4_acodec $mp4_vcodec -f mov "$dest_file_mp4"
