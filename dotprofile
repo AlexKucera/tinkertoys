@@ -60,6 +60,8 @@ export CLICOLOR=1
 export GREP_OPTIONS='--color=auto'
 
 # Enhanced prompt
+PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 export PS1="\[\e[1m\]________________________________________________________________________________\n\[\e[1;32;40m\]| \w @ \h (\u)\n| \t => \[\e[0m\]"
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$(find $X_PIPELINE_LOCATION/Scripting -name '.*' -prune -o -type d | tr '\n' ':'):$(find /Volumes/ProjectsRaidBackup/x_Pipeline/Scripting -name '.*' -prune -o -type d | tr '\n' ':')
 
@@ -111,6 +113,8 @@ alias symlinks="find . -type l ! -exec test -e {} \; -print"
 ## modo
 alias modo="$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/alex/startup/ModoLauncher" #"$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo"
 alias modobeta="$X_PIPELINE_LOCATION/x_AppPlugins/modo/beta/ModoBetaLauncher"
+alias modotest="$MODOPATH/Contents/MacOS/modo -dbon:noconfig '-config:/'"
+alias modotestbeta="$MODOBETAPATH/Contents/MacOS/modo -dbon:noconfig '-config:/'"
 alias modo_moni="$X_PIPELINE_LOCATION/x_AppPlugins/modo/user_resources/moni/startup/ModoLauncher"
 alias modor="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl"
 alias modorb="$X_PIPELINE_LOCATION/x_AppPlugins/modo/modo.app/Contents/MacOS/modo_cl < $X_PIPELINE_LOCATION/Scripting/tinkertoys/modo_render.txt"
