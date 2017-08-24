@@ -8,6 +8,12 @@
 
 Converts a PSD file to several EXR files (or one layered one) keeping the layer names intact.
 
+Requires ImageMagick (https://www.imagemagick.org/)
+with OpenEXR and HDRi support (https://www.imagemagick.org/script/high-dynamic-range.php)
+as well as the OpenEXR binaries (http://www.openexr.org/).
+
+v0.1 - 2017-08-24
+
 """
 
 import sys
