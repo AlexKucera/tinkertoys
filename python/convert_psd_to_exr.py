@@ -167,41 +167,43 @@ def main(input, multi, compression):
 
 
 if __name__ == '__main__':
+
     # Set up optional arguments
     parser = argparse.ArgumentParser(description="Convert a given set of PSD files to OpenEXR files.")
 
     parser.add_argument("-c", "--compression", help="choose the EXR compression type "
                                                     "(none/rle/zip/piz/pxr24/b44/b44a/dwaa/dwab); default is B44A",
                         default="B44A")
-    parser.add_argument("-m", "--multilayer", help="Output one multilayered EXR if True or one EXR per layer if False. "
-                                                   "Default is True.",
+    parser.add_argument("-m", "--multilayer", help="Output multilayered EXR instead of one EXR per layer.",
                         action="store_true")
     parser.add_argument("-i", "--input", help="input file")
 
     # Parse arguments
     try:
         args = parser.parse_args()
+        # Assign or use argument values
+
+        if not args.input:
+            print("\nNo input file specified\n\n")
+            parser.print_help()
+        else:
+            infile = args.input
+
+            if args.multilayer:
+                multi = True
+            else:
+                multi = False
+
+            if args.compression:
+                compression = args.compression
+            else:
+                compression = "B44A"
+
+            try:
+                main(infile, multi, compression)
+            except:
+                print traceback.format_exc()
+
     except:
-        parser.print_help()
+
         sys.exit(0)
-
-    # Assign or use argument values
-    if not args.input:
-        print "No input file specified"
-    else:
-        infile = args.input
-
-        if args.multilayer:
-            multi = True
-        else:
-            multi = False
-
-        if args.compression:
-            compression = args.compression
-        else:
-            compression = "B44A"
-
-        try:
-            main(infile, multi, compression)
-        except:
-            print traceback.format_exc()
