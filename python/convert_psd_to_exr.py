@@ -77,7 +77,10 @@ def exr_compression(input, compression):
 def exr_multipart(layers, input):
     cmd = "exrmultipart -combine -i"
 
-    multiFilename = "{basename}_multi.exr".format(basename=os.path.splitext(input)[0])
+    multiFilename = "{basename}.exr".format(basename=os.path.splitext(input)[0])
+
+    if os.path.exists(multiFilename):
+        multiFilename = "{basename}_multi.exr".format(basename=os.path.splitext(input)[0])
 
     # Make sure rgba is the topmost layer of the EXR
     for layer in layers:
