@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # encoding: utf-8
 # Alexander Kucera
 # babylondreams.de
@@ -118,7 +118,7 @@ def missing(first, last, list, incr=1):
     :rtype: set
     """
 
-    return set(xrange(first, last + 1, incr)).difference(list)
+    return set(range(first, last + 1, incr)).difference(list)
 
 
 def contractor(ranges):
@@ -259,7 +259,7 @@ if __name__ == '__main__':
             try:
                 main(infile, args.file, args.recursive, args.name)
             except:
-                print traceback.format_exc()
+                print(traceback.format_exc())
 
     except:
 
