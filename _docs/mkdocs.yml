@@ -1,6 +1,46 @@
 site_name: Tinkertoys Documentation
+site_description: Comprehensive documentation for tinkertoys utility scripts and automation tools
 
 use_directory_urls: false
+
+nav:
+  - Home: index.md
+  - Bash Scripts:
+    - Overview: bash/overview.md
+    - Development Tools:
+      - App Builder: bash/development/appifiy.md
+      - Folder Comparison: bash/development/comparefolders.md  
+      - Image Extension Fixer: bash/development/fixImgExt.md
+      - Version Incrementer: bash/development/version_up.md
+    - Media Processing:
+      - Images to H.264: bash/media/convert_images_to_h264.md
+      - Images to ProRes: bash/media/convert_images_to_prores.md
+      - Movie to H.264: bash/media/convert_movie_to_h264.md
+      - Movie to ProRes: bash/media/convert_movie_to_prores.md
+      - Movie to Web: bash/media/movie_to_web.md
+      - Stereo Audio Split: bash/media/split_stereo_to_mono.md
+    - System Administration:
+      - Application List Updater: bash/system/application_list_updater.md
+      - Log Size Checker: bash/system/checkLogSize.md
+      - Disk Device Finder: bash/system/getDiskDevice.md
+      - Memory Purge Loop: bash/system/purgeLoop.md
+      - Log Collector: bash/system/log_collector.md
+    - Rendering Tools:
+      - Mail Notifications: bash/rendering/mail_send.md
+      - Nuke Render Automation: bash/rendering/nukerender_bash.md
+    - Shared Libraries:
+      - Common Functions: bash/lib/common.md
+      - Media Functions: bash/lib/media_functions.md
+      - System Functions: bash/lib/system_functions.md
+      - Log and Echo Utils: bash/lib/writeToLogAndEcho.md
+  - Python Scripts:
+    - Overview: python/overview.md
+  - Ruby Scripts:
+    - Overview: ruby/overview.md
+  - Configuration:
+    - Setup Guide: config/setup.md
+    - Mail Configuration: config/mail_send.md
+    - Log Sources: config/log_sources.md
 
 theme:
   name: "material"
@@ -9,18 +49,21 @@ theme:
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.indexes
     - search.highlight
     - content.code.copy
+    - content.code.annotate
 
 plugins:
-- mkdocstrings:
-    handlers:
-      python:
-        paths: [../assets/python]
-- search
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [../python]
 
 markdown_extensions:
   - admonition
+  - attr_list
   - codehilite
   - pymdownx.details
   - pymdownx.superfences
@@ -28,5 +71,12 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - toc:
       permalink: true
+  - def_list
+  - footnotes
+  - md_in_html
