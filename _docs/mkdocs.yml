@@ -25,6 +25,7 @@ nav:
       - Disk Device Finder: bash/system/getDiskDevice.md
       - Memory Purge Loop: bash/system/purgeLoop.md
       - Log Collector: bash/system/log_collector.md
+      - Folder Structure Duplicator: bash/system/duplicate_folder_structure.md
     - Rendering Tools:
       - Mail Notifications: bash/rendering/mail_send.md
       - Nuke Render Automation: bash/rendering/nukerender_bash.md
@@ -35,8 +36,27 @@ nav:
       - Log and Echo Utils: bash/lib/writeToLogAndEcho.md
   - Python Scripts:
     - Overview: python/overview.md
-  - Ruby Scripts:
-    - Overview: ruby/overview.md
+    - Data Processing:
+      - DayOne Journal Splitter: python/data/dayone_split.md
+      - Pinboard Export Tool: python/data/export_pinboard.md
+      - Render Statistics Analyzer: python/data/renderstats.md
+    - Development Tools:
+      - Timer Utility: python/development/timer.md
+      - Git Empty Folder Marker: python/development/markemptyfolders.md
+    - Media Processing:
+      - PSD to EXR Converter: python/media/convert_psd_to_exr.md
+    - System Utilities:
+      - Directory Comparison: python/system/compare_folders.md
+      - File Size Comparison: python/system/compare_sizes.md
+      - Symlink Repair Tool: python/system/fix_symlinks.md
+      - Duplicate File Manager: python/system/keep_larger_version.md
+      - Path Replacement Tool: python/system/switch_paths.md
+      - Folder Structure Duplicator: python/system/duplicate_folder_structure.md
+    - Shared Libraries:
+      - AppleScript Integration: python/lib/applescript.md
+      - File Copying Utilities: python/lib/copy_file.md
+      - Hash Calculation: python/lib/hash_for_file.md
+      - Interactive Prompts: python/lib/query_yes_no.md
   - Configuration:
     - Setup Guide: config/setup.md
     - Mail Configuration: config/mail_send.md

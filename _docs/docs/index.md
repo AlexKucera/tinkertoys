@@ -7,8 +7,7 @@ Welcome to the comprehensive documentation for the Tinkertoys utility scripts co
 Tinkertoys is a collection of utility scripts and automation tools organized by programming language and purpose. The repository includes:
 
 - **Bash Scripts**: System administration, media processing, development tools, and rendering automation
-- **Python Scripts**: File management, data processing, and integration utilities  
-- **Ruby Scripts**: Task management and workflow integration tools
+- **Python Scripts**: Data processing, media conversion, system utilities, and macOS integration
 - **Configuration Files**: Centralized settings for various tools and services
 
 ## Quick Start
@@ -18,8 +17,7 @@ Tinkertoys is a collection of utility scripts and automation tools organized by 
 - **macOS**: Most scripts are designed for macOS (some may work on Linux)
 - **Bash 4.0+**: Modern bash shell for script execution
 - **FFmpeg**: Required for media processing scripts
-- **Python 3.6+**: For Python utilities
-- **Ruby 2.6+**: For Ruby scripts
+- **Python 3.11+**: For Python utilities (modernized from Python 2.7)
 
 ### Installation
 
@@ -31,32 +29,46 @@ Tinkertoys is a collection of utility scripts and automation tools organized by 
 ## Key Features
 
 ### 🔧 Development Tools
-- **App Builder**: Convert shell scripts to macOS applications
-- **Version Management**: Automated version number incrementing
-- **Folder Comparison**: Compare directories for differences
-- **Image Extension Fixing**: Automatically correct file extensions
+- **App Builder** (Bash): Convert shell scripts to macOS applications
+- **Version Management** (Bash): Automated version number incrementing
+- **Folder Comparison** (Bash/Python): Compare directories for differences
+- **Image Extension Fixing** (Bash): Automatically correct file extensions
+- **Timer Utility** (Python): Advanced timing and stopwatch functionality
+- **Git Empty Folder Marker** (Python): Manage .gitkeep files in repositories
 
 ### 🎥 Media Processing
-- **Video Transcoding**: Convert videos to H.264, ProRes, and web formats
-- **Image Sequence Processing**: Convert image sequences to video
-- **Audio Processing**: Split stereo audio to mono channels
-- **Format Optimization**: Optimized settings for different use cases
+- **Video Transcoding** (Bash): Convert videos to H.264, ProRes, and web formats
+- **Image Sequence Processing** (Bash): Convert image sequences to video
+- **Audio Processing** (Bash): Split stereo audio to mono channels
+- **PSD to EXR Converter** (Python): Convert Photoshop files to EXR format
+- **Render Statistics** (Python): Analyze render times and frame sequences
 
 ### ⚙️ System Administration
-- **Application Management**: Track installed applications for backup
-- **Log Monitoring**: Automated log size checking and collection
-- **Memory Management**: Intelligent memory purging for macOS
-- **Disk Management**: Find disk devices by label
+- **Application Management** (Bash): Track installed applications for backup
+- **Log Monitoring** (Bash): Automated log size checking and collection
+- **Memory Management** (Bash): Intelligent memory purging for macOS
+- **Disk Management** (Bash): Find disk devices by label
+- **File Size Comparison** (Python): Compare file sizes and detect corruption
+- **Symlink Repair** (Python): Fix broken symbolic links
+- **Duplicate File Manager** (Python): Remove duplicate files keeping larger versions
+- **Path Replacement** (Python): Bulk path updates with JSON configuration
 
 ### 🎬 Rendering Tools
-- **Email Notifications**: Automated notifications for completed renders
-- **Nuke Integration**: Streamlined Nuke rendering with progress tracking
-- **Render Statistics**: Time tracking and performance monitoring
+- **Email Notifications** (Bash): Automated notifications for completed renders
+- **Nuke Integration** (Bash): Streamlined Nuke rendering with progress tracking
+
+### 📊 Data Processing
+- **DayOne Journal Splitter** (Python): Split DayOne exports into individual files
+- **Pinboard Export** (Python): Backup Pinboard bookmarks
 
 ### 📚 Shared Libraries
-- **Common Functions**: Reusable validation and utility functions
-- **Media Functions**: Specialized video/audio processing utilities
-- **System Functions**: Cross-platform system information and management
+- **Common Functions** (Bash): Reusable validation and utility functions
+- **Media Functions** (Bash): Specialized video/audio processing utilities
+- **System Functions** (Bash): Cross-platform system information and management
+- **AppleScript Integration** (Python): Modern macOS automation with error handling
+- **File Copying Utilities** (Python): High-performance file operations with progress tracking
+- **Hash Calculation** (Python): Optimized file hashing with multiple algorithms
+- **Interactive Prompts** (Python): Enhanced user interaction utilities
 
 ## Architecture
 
